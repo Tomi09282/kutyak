@@ -15,7 +15,7 @@ namespace Kutyák
             AtlagEletkor();
             Legidossebb();
             Datum();
-
+            TerheltNap();
             Console.ReadLine();
         }
         static void BeolvasNev()
@@ -96,6 +96,34 @@ namespace Kutyák
                 Console.WriteLine($"\t{KutyaFajtaLista[KutyaFajtaLista.FindIndex(x => x.Id == linq[i])].MagyarNev},{db[i]} kutya");
             }
         }
+        static void TerheltNap()
+        {
+            List<TerheltNap> Leterhelt = new List<TerheltNap>();
+            for (int i = 0; i < KutyaLista.Count; i++)
+            {
+                int day = 0;
+                bool ifday = false;
+                for (int j = 0; j < Leterhelt.Count; j++)
+                {
+                    if (Leterhelt[j].date == KutyaLista[i].Ellenorzes)
+                    {
+                        ifday = true;
+                        day = j;
+                    }
+                }
+                if (ifday == true)
+                {
+                    Leterhelt[day].dognum++;
+                }
+                else
+                {
+                    Leterhelt.Add(new TerheltNap(KutyaLista[i].Ellenorzes, 1));
+                }
+            }
+            List<TerheltNap> TerheltsegLista = Leterhelt.OrderByDescending(item => item.dognum).ToList();
+            Console.WriteLine($"legterheltebb nap: {TerheltsegLista[0].date}.: {TerheltsegLista[0].dognum} kutya");
+        }
 
+        }
     }
 }
