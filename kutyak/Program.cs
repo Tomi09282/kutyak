@@ -15,8 +15,7 @@ namespace Kutyák
             AtlagEletkor();
             Legidossebb();
             Datum();
-            TerheltNap();
-            Statistics();
+
             Console.ReadLine();
         }
         static void BeolvasNev()
@@ -97,59 +96,6 @@ namespace Kutyák
                 Console.WriteLine($"\t{KutyaFajtaLista[KutyaFajtaLista.FindIndex(x => x.Id == linq[i])].MagyarNev},{db[i]} kutya");
             }
         }
-        static void TerheltNap()
-        {
-            List<TerheltNap> Leterhelt = new List<TerheltNap>();
-            for (int i = 0; i < KutyaLista.Count; i++)
-            {
-                int day = 0;
-                bool ifday = false;
-                for (int j = 0; j < Leterhelt.Count; j++)
-                {
-                    if (Leterhelt[j].date == KutyaLista[i].Ellenorzes)
-                    {
-                        ifday = true;
-                        day = j;
-                    }
-                }
-                if (ifday == true)
-                {
-                    Leterhelt[day].dognum++;
-                }
-                else
-                {
-                    Leterhelt.Add(new TerheltNap(KutyaLista[i].Ellenorzes, 1));
-                }
-            }
-            List<TerheltNap> TerheltsegLista = Leterhelt.OrderByDescending(item => item.dognum).ToList();
-            Console.WriteLine($"legterheltebb nap: {TerheltsegLista[0].date}.: {TerheltsegLista[0].dognum} kutya");
-        }
-        static void Statistics()
-        {
-            Console.WriteLine("névszatisztika.txt");
-            List<Statisztika> Stat = new List<Statisztika>();
-            int[] list = new int[KutyaNevLista.Count];
-            for (int i = 0; i < KutyaNevLista.Count; i++)
-            {
-                for (int j = 0; j < KutyaLista.Count; j++)
-                {
-                    if (KutyaNevLista[i].KutyaNevId == KutyaLista[j].NevID)
-                    {
-                        list[i]++;
-                    }
-                }
-            }
-            for (int i = 0; i < KutyaNevLista.Count; i++)
-            {
-                Stat.Add(new Statisztika(KutyaNevLista[i].KutyaNev, list[i]));
-            }
-            List<Statisztika> statistic = Stat.OrderByDescending(item => item.Db).ToList();
-            StreamWriter w = new StreamWriter("Nevstatisztika.txt", false, Encoding.UTF8);
-            for (int i = 0; i < KutyaNevLista.Count; i++)
-            {
-                w.WriteLine($"{statistic[i].Nev};{statistic[i].Db}");
-            }
-            w.Close();
-        }
+
     }
 }
