@@ -16,6 +16,7 @@ namespace Kutyák
             Legidossebb();
             Datum();
             TerheltNap();
+            Statistics();
             Console.ReadLine();
         }
         static void BeolvasNev()
@@ -123,7 +124,32 @@ namespace Kutyák
             List<TerheltNap> TerheltsegLista = Leterhelt.OrderByDescending(item => item.dognum).ToList();
             Console.WriteLine($"legterheltebb nap: {TerheltsegLista[0].date}.: {TerheltsegLista[0].dognum} kutya");
         }
-
+        static void Statistics()
+        {
+            Console.WriteLine("névszatisztika.txt");
+            List<Statisztika> Stat = new List<Statisztika>();
+            int[] list = new int[KutyaNevLista.Count];
+            for (int i = 0; i < KutyaNevLista.Count; i++)
+            {
+                for (int j = 0; j < KutyaLista.Count; j++)
+                {
+                    if (KutyaNevLista[i].KutyaNevId == KutyaLista[j].NevID)
+                    {
+                        list[i]++;
+                    }
+                }
+            }
+            for (int i = 0; i < KutyaNevLista.Count; i++)
+            {
+                Stat.Add(new Statisztika(KutyaNevLista[i].KutyaNev, list[i]));
+            }
+            List<Statisztika> statistic = Stat.OrderByDescending(item => item.Db).ToList();
+            StreamWriter w = new StreamWriter("Nevstatisztika.txt", false, Encoding.UTF8);
+            for (int i = 0; i < KutyaNevLista.Count; i++)
+            {
+                w.WriteLine($"{statistic[i].Nev};{statistic[i].Db}");
+            }
+            w.Close();
         }
     }
 }
