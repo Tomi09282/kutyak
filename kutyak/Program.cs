@@ -13,11 +13,6 @@ namespace Kutyák
             BeolvasNev();
             BrolvasFajta();
             AtlagEletkor();
-            Legidossebb();
-            Datum();
-            TerheltNap();
-            Statistics();
-            Console.ReadLine();
         }
         static void BeolvasNev()
         {
